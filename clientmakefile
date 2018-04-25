@@ -1,0 +1,23 @@
+CC=g++
+CFLAGS= -c -Wall -std=c++11
+LDFLAGS= -std=c++11 -Wall
+SOURCES=Project4Client.cpp DirectoryHash.cpp Checksum.cpp PacketOperations.cpp FileComparer.cpp FileNameOperations.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE= Project4Client
+TARFILES = Project4
+TARNAME = CUSProject4.tar
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ -lssl -lcrypto
+
+.c.o:
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	\rm *.o *~ $(EXECUTABLE)
+
+tar:
+	cd .. && tar cfv $(TARNAME) $(TARFILES)
+
